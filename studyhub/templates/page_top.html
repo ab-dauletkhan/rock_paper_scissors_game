@@ -1,0 +1,43 @@
+<div class="page_top">
+    <div class="stats">
+        <ul>
+            <h4>Stats:</h4>
+            {% if request.user.is_authenticated %}
+            <li>Total Games Played:  <strong>{{data.total_games}}</strong></li>
+            <li>Wins:  <strong>{{data.wins}}</strong></li>
+            <li>Losses:  <strong>{{data.losses}}</strong></li>
+            <li>Draws:  <strong>{{data.draws}}</strong></li>
+            <li>Rating:  <strong>{{data.rating}}</strong></li>
+            {% else %}
+            <a href="{% url 'login' %}">Login</a> to see your stats
+            {% endif %}
+        </ul>
+
+    </div>
+    <div class="welcome">
+        <h2>Welcome to</h2>
+        <h1>Rock Scissors Paper</h1>
+    </div>
+    <div class="friends-wrapper">
+        <div class="log">
+            {% if request.user.is_authenticated %}
+            <p>Hello, <strong>{{request.user}}</strong></p>
+            <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+<!--        <div class="friends">-->
+<!--            <h4>Friends:</h4>-->
+<!--        </div>-->
+    </div>
+</div>
+
+<style>
+    .page_top {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 1px solid red;
+    }
+</style>

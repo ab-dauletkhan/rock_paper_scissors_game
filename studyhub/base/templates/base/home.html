@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home_container {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+    }
+    .lobbies_wrapper {
+        width: 100vw;
+        display: flex;
+        justify-content: space-around;
+    }
+</style>
+
+    <div class="home_container">
+        <div>
+            <h4>Lobbies</h4>
+            <p>There are {{lobby_count}} lobbies right now.</p>
+            <a href="{% url 'create_lobby' %}">Create Lobby</a>
+            <div class="lobbies_wrapper">
+                <div>
+                    <h3>Available lobbies:</h3>
+                    {% for lobby in available_lobbies %}
+                        <div>
+                            {% if request.user.player == lobby.host %}
+                            <a href="{% url 'update_lobby' lobby.id %}">Edit</a>
+                            <a href="{% url 'delete_lobby' lobby.id %}">Delete</a>
+                            {% endif %}
+                            <span>@{{lobby.host}}</span>
+                            <li>{{lobby.id}} -- <a href="{% url 'lobby' lobby.id %}">{{lobby.name}}</a> -- {{lobby.capacity}} -- {{lobby.status}}</li>
+                            <small>{{member_count}} members: {% for member in members %}{{member.user.username}}{% endfor %}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h3>Playing lobbies:</h3>
+                    {% for lobby in playing_lobbies %}
+                        <div>
+                            {% if request.user.player == lobby.host %}
+                            <a href="{% url 'update_lobby' lobby.id %}">Edit</a>
+                            <a href="{% url 'delete_lobby' lobby.id %}">Delete</a>
+                            {% endif %}
+                            <span>@{{lobby.host}}</span>
+                            <li>{{lobby.id}} -- <a href="{% url 'lobby' lobby.id %}">{{lobby.name}}</a> -- {{lobby.capacity}} -- {{lobby.status}}</li>
+                            <small>{{member_count}} members: {% for member in members %}{{member.user.username}}{% endfor %}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h3>Finished lobbies:</h3>
+                    {% for lobby in finished_lobbies %}
+                        <div>
+                            {% if request.user.player == lobby.host %}
+                            <a href="{% url 'update_lobby' lobby.id %}">Edit</a>
+                            <a href="{% url 'delete_lobby' lobby.id %}">Delete</a>
+                            {% endif %}
+                            <span>@{{lobby.host}}</span>
+                            <li>{{lobby.id}} -- <a href="{% url 'lobby' lobby.id %}">{{lobby.name}}</a> -- {{lobby.capacity}} -- {{lobby.status}}</li>
+                            <small>{{member_count}} members: {% for member in members %}{{member.user.username}}{% endfor %}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

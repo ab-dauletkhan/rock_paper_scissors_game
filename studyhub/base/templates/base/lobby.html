@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .lobby_content {
+        display: flex;
+        justify-content: space-between;
+        width: 100vw;
+    }
+    .lobby_left {
+        width: 25%;
+    }
+    .lobby_right {
+        width: 75%;
+    }
+</style>
+
+<h1>{{lobby.name}}</h1>
+
+<div class="lobby_content">
+    <div class="lobby_left">
+        <div class="lobby_members">
+            <h3>Members:</h3>
+            <ul>
+                {% for member in members %}
+                    <li>
+                        {{member.user.player}}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="member_id" value="{{ member.user.player.id }}">
+                            <button type="submit" class="{% if member.user.player.is_ready %}ready{% else %}not-ready{% endif %}">
+                                {% if member.user.player.is_ready %}Ready{% else %}Not Ready{% endif %}
+                            </button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- <div class="chat_wrapper">
+            <h3>Chat</h3>
+            <hr>
+            {% for message in lobby_messages %}
+                <p>
+                    <small>@{{message.author}}  {{message.created_at|timesince}}</small>
+                    <br>
+                    {{message.content}}
+                </p>
+            {% endfor %}
+
+            {% if request.user.is_authenticated %}
+            <div class="comment_form">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="content" placeholder="Write here...">
+                </form>
+            </div>
+            {% endif %}
+        </div> -->
+    </div>
+    <div class="lobby_right">
+        {% if all_ready %}
+            <h2>Game is starting!</h2>
+        {% else %}
+            <p>Game will be displayed here</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
