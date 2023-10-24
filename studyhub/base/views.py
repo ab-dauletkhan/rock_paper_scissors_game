@@ -87,7 +87,6 @@ def home(request):
     available_lobbies = Lobby.objects.filter(status='available')
     playing_lobbies = Lobby.objects.filter(status='playing')
     finished_lobbies = Lobby.objects.filter(status='finished')
-    print(get_lobby_data(available_lobbies, 'available'))
     context = {
         'data': data,
         'lobbies': Lobby.objects.all(),
